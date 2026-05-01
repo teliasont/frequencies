@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FREQUENCIES // FREQ.001</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:wght@400;700;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --bg: #1A1C1E; --bg-subtle: #242729; --bg-inset: #111315; --bg-wall: #111315;
+      --border: #3A3E42; --border-strong: #5A6068;
+      --text: #E8EAE8; --text-secondary: #A8ACA8; --text-tertiary: #6A6E6A;
+      --accent: #EB644B; --accent-subtle: #2A1810; --accent-text: #F28C78; --accent-rule: #EB644B;
+      --signal: #2B5C84; --signal-subtle: #0F1E2B; --signal-text: #5B9EC9;
+      --paper: #E4DBD9; --paper-border: #A09890; --paper-text: #000105;
+      --paper-secondary: #2B2320; --paper-tertiary: #6B6360;
+      --success: #4A8C5C; --warning: #C4892A; --danger: #C0392B;
+      --font-display: 'Big Shoulders Stencil', 'Impact', sans-serif;
+      --font-body: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
+      --font-mono: 'Space Mono', 'JetBrains Mono', 'Courier New', monospace;
+      --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+      --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 128px;
+    }
+    [data-mode="light"] {
+      --bg: #F0EDEA; --bg-subtle: #E4E0DC; --bg-inset: #D8D3CE; --bg-wall: #D0CBC6;
+      --border: #B8B2AC; --border-strong: #8A837C;
+      --text: #1C1A18; --text-secondary: #4A4642; --text-tertiary: #7A7470;
+      --accent: #C94030; --accent-subtle: #F5DDD8; --accent-text: #8C2018; --accent-rule: #C94030;
+      --signal: #1E4A70; --signal-subtle: #D4E4F0; --signal-text: #1A3D5C;
+      --success: #2D6B3E; --warning: #8B5A12; --danger: #8B1A14;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 1px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    .nav::before { content: ''; display: block; height: 4px; background: var(--accent-rule); }
+    .nav__inner {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px var(--space-lg);
+    }
+    .nav__title {
+      font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-tertiary);
+    }
+    .nav__links { display: flex; gap: 16px; list-style: none; align-items: center; }
+    .nav__link {
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-tertiary); text-decoration: none;
+      background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s;
+    }
+    .nav__link:hover { color: var(--signal-text); }
+
+    /* ── THEME TOGGLE BUTTON ── */
+    .nav-theme-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-tertiary); padding: 0; display: flex;
+      align-items: center; justify-content: center;
+      width: 20px; height: 20px; flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .nav-theme-btn:hover { color: var(--text); }
+    .nav-theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 1px; }
+
+    /* ── BEAT 1: HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      background: #111315;
+    }
+
+    /* console starts below nav (4px stripe + ~48px inner = 52px) + 60px buffer */
+    .console {
+      position: absolute; inset: 0;
+      padding: 60px var(--space-2xl) var(--space-2xl);
+      display: flex; flex-direction: column;
+      will-change: transform;
+      transition: transform 1.4s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .console.exiting { transform: translateY(-110%); }
+
+    /* gradient covers only nav zone, masks lines scrolling off top during exit */
+    .console::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50px;
+      background: linear-gradient(to bottom, #111315 40%, transparent);
+      pointer-events: none; z-index: 1;
+    }
+
+    .console__header {
+      font-family: var(--font-mono); font-size: 11px; color: var(--signal-text);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding-left: var(--space-sm); border-left: 3px solid var(--signal);
+      margin-bottom: var(--space-lg); flex-shrink: 0;
+    }
+    .console__output {
+      font-family: var(--font-mono); font-size: 11px; line-height: 1.9;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .console__line { display: block; white-space: pre; }
+    .console__line--system { color: var(--text-secondary); }
+    .console__line--ok { color: var(--success); }
+    .console__line--error { color: var(--accent); }
+    .console__line--intercept { color: var(--signal-text); }
+    .console__line--rebel { color: var(--accent); font-weight: 700; }
+    .console__cursor {
+      display: inline-block; width: 7px; height: 13px;
+      background: var(--text-secondary); margin-top: 4px;
+      animation: blink 0.9s step-end infinite;
+    }
+    .console__cursor.hidden { display: none; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero__reveal {
+      text-align: center; padding: 0 var(--space-lg);
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+      position: relative; z-index: 1; pointer-events: none;
+    }
+    .hero__reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .hero__pre {
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-lg);
+      min-height: 1em;
+    }
+    /* LARGER HERO TITLE */
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(5.5rem, 16vw, 11rem);
+      font-weight: 900; text-transform: uppercase; line-height: 0.92;
+      letter-spacing: -0.01em; color: var(--text); margin-bottom: var(--space-2xl);
+    }
+    .hero__sub {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--signal-text); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ── BEAT 2: BRIEFING — SCROLL PAST ── */
+    .briefing { position: relative; }
+    .briefing__sticky {
+      position: sticky; top: 0; height: 100vh;
+      overflow: hidden; pointer-events: none;
+    }
+    .briefing__reel { will-change: transform; }
+    .briefing__line {
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 400; color: var(--text); text-align: center;
+      max-width: 680px; margin: 0 auto; padding: 0 var(--space-lg);
+      line-height: 1.6; text-wrap: pretty;
+    }
+
+    /* ── BEAT 3: INTELLIGENCE — 2-COL OFFSET MASONRY ── */
+    .intelligence { padding: var(--space-3xl) var(--space-lg); max-width: 1100px; margin: 0 auto; }
+    .card-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0 var(--space-lg); align-items: start;
+    }
+    @media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
+    .card-col { display: flex; flex-direction: column; gap: var(--space-lg); }
+    .card-col--offset { margin-top: 80px; }
+    @media (max-width: 600px) { .card-col--offset { margin-top: 0; } }
+
+    /* ENTRY CARD — paper surface */
+    .entry-card {
+      background: #E4DBD9;
+      border: none;
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+      aspect-ratio: 4 / 6;
+      box-shadow: 2px 3px 0 #A09890, 4px 6px 0 rgba(0,0,0,0.18);
+      border-radius: 0;
+    }
+    .entry-card__top-rule {
+      height: 4px; background: #F2454F;
+      margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-md);
+    }
+    .entry-card--flagged .entry-card__top-rule { background: #F2454F; }
+    .entry-card__classification {
+      font-family: var(--font-mono); font-size: 10px; color: #6B6360;
+      text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: var(--space-xs);
+    }
+    .entry-card__header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: var(--space-md); gap: var(--space-md);
+    }
+    .entry-card__name {
+      font-family: var(--font-display); font-size: 1.875rem; font-weight: 700;
+      text-transform: uppercase; color: #000105; line-height: 1.0; flex: 1;
+    }
+    .entry-card__rating {
+      font-family: var(--font-display); font-size: 2.5rem; font-weight: 700;
+      color: #F2454F; line-height: 1.0; white-space: nowrap;
+    }
+    .entry-card__rating-denom { font-size: 1rem; color: #6B6360; }
+    .entry-card__meta-row { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .entry-card__meta-item { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .entry-card__label {
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.2em; color: #6B6360;
+    }
+    .entry-card__tier-badge {
+      font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 2px 8px; border: 1px solid #2B5C84;
+      color: #2B5C84; display: inline-block; width: fit-content;
+    }
+    .entry-card__tier-badge--paid { border-color: #2B5C84; color: #2B5C84; }
+    .entry-card__tier-badge--compromised { border-color: #C0392B; color: #C0392B; }
+    .entry-card__tags { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+    .entry-card__tag {
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 2px 8px;
+      background: transparent; color: #2B5C84; border: 1px solid #2B5C84;
+    }
+    .entry-card__note {
+      font-family: var(--font-body); font-size: 14px; color: #2B2320;
+      line-height: 1.6; font-style: italic;
+      border-top: 1px solid #B0A8A4; padding-top: var(--space-md);
+    }
+    .entry-card__bg-number {
+      position: absolute; bottom: -12px; right: 10px;
+      font-family: var(--font-display); font-size: 140px; font-weight: 900;
+      color: #000105; opacity: 0.05; line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .entry-card--flagged .entry-card__bg-number { color: #000105; opacity: 0.05; }
+
+    /* ── BEAT 4: DIRECTIVE — FULL VIEWPORT CENTERED ── */
+    .directive {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: var(--space-lg);
+    }
+    .directive__line1 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 4rem);
+      font-weight: 700; text-transform: uppercase; color: var(--text); line-height: 1.15;
+      margin-bottom: var(--space-xl);
+    }
+    .directive__line2 {
+      font-family: var(--font-display); font-size: clamp(5rem, 13vw, 9rem);
+      font-weight: 900; text-transform: uppercase; color: var(--text); line-height: 1.0;
+    }
+
+    /* ── BEAT 5: SIGN-OFF ── */
+    .signoff { padding: var(--space-4xl) var(--space-lg) 0; max-width: 1100px; margin: 0 auto; }
+    .signoff__classification {
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: var(--space-md);
+    }
+    .signoff__lost {
+      font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700; text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: var(--space-xl);
+    }
+    .signoff__link {
+      font-family: var(--font-mono); font-size: 12px; color: var(--signal-text);
+      text-decoration: none; border-bottom: 1px solid var(--signal);
+      text-transform: uppercase; letter-spacing: 0.1em; padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .signoff__link:hover { color: var(--accent); border-color: var(--accent); }
+    .page-footer { margin-top: var(--space-4xl); border-top: 4px solid var(--signal); }
+
+    /* ── TWEAKS PANEL ── */
+    .tweaks-panel {
+      position: fixed; bottom: var(--space-lg); right: var(--space-lg); z-index: 500;
+      background: var(--bg-subtle); border: 1px solid var(--border-strong);
+      padding: var(--space-lg); width: 240px;
+      display: none; flex-direction: column; gap: var(--space-md);
+    }
+    .tweaks-panel.open { display: flex; }
+    .tweaks-panel__title {
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--text-tertiary);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .tweaks-panel__close {
+      background: none; border: none; cursor: pointer; color: var(--text-tertiary);
+      font-family: var(--font-mono); font-size: 11px; padding: 0;
+    }
+    .tweaks-panel__close:hover { color: var(--accent); }
+    .tweaks-row { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .tweaks-label {
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-secondary);
+    }
+    .tweaks-btn {
+      font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 8px 12px; background: none;
+      border: 1px solid var(--border); color: var(--text-secondary);
+      cursor: pointer; text-align: left; transition: border-color 0.2s, color 0.2s;
+    }
+    .tweaks-btn:hover { border-color: var(--signal); color: var(--signal-text); }
+    .tweaks-toggle { display: flex; gap: var(--space-xs); }
+    .tweaks-toggle-btn {
+      flex: 1; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 6px 4px; background: none;
+      border: 1px solid var(--border); color: var(--text-tertiary);
+      cursor: pointer; transition: all 0.15s; text-align: center;
+    }
+    .tweaks-toggle-btn.active {
+      background: var(--signal-subtle); border-color: var(--signal); color: var(--signal-text);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── BEAT 1: HERO CONSOLE ── -->
+<section class="hero" style="background-color: var(--bg-wall)">
+  <div class="console" id="console" role="region" aria-label="Transmission Sequence">
+    <div class="console__header">FREQ.001 // UNAUTHORIZED TERMINAL</div>
+    <div class="console__output" id="consoleOutput"></div>
+    <span class="console__cursor" id="cursor" aria-hidden="true"></span>
+  </div>
+  <div class="hero__reveal" id="heroReveal" aria-live="polite">
+    <p class="hero__pre"><br></p>
+    <h1 class="hero__title">THE SIGNAL<br>IS YOURS.</h1>
+    <p class="hero__sub">FREQ. 001 &nbsp;// UNAUTHORIZED DISTRIBUTION</p>
+  </div>
+</section>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <span class="nav__title">FREQUENCIES</span>
+    <ul class="nav__links">
+      <li><a href="#intelligence" class="nav__link">MODELS</a></li>
+      <li><a href="about.html" class="nav__link">ABOUT</a></li>
+      <li><button class="nav-theme-btn nav__link" id="theme-toggle" aria-label="Toggle theme"></button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── BEAT 2: BRIEFING ── -->
+<section class="briefing" id="briefing" aria-label="Transmission Briefing">
+  <div class="briefing__sticky">
+    <div class="briefing__reel" id="briefingReel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ── BEAT 3: INTELLIGENCE ── -->
+<section class="intelligence" id="intelligence">
+  <div class="card-grid">
+
+    <!-- LEFT COLUMN: cards 1, 3, 5 -->
+    <div class="card-col">
+
+      <!-- CARD 01: Claude Sonnet 4.6 -->
+      <a href="claude-sonnet.html" class="entry-card">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.01 // NEW.WEST.GRID</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Claude Sonnet 4.6</h2>
+          <span class="entry-card__rating" aria-label="Rating: 4 out of 5">4<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge">Free / Paid</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Best Deployed For</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag">Critical Analysis</span>
+              <span class="entry-card__tag">Long-form Writing</span>
+              <span class="entry-card__tag">Outlining Plans</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Executes your objective — not your intention. Arrive knowing what you actually need or it decides that for you.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">4</span>
+      </a>
+
+      <!-- CARD 03: Perplexity -->
+      <a href="perplexity.html" class="entry-card">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.03 // NEW.WEST.GRID</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Perplexity</h2>
+          <span class="entry-card__rating" aria-label="Rating: 4 out of 5">4<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge">Free / Paid</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Best Deployed For</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag">Research</span>
+              <span class="entry-card__tag">Fact-Checking</span>
+              <span class="entry-card__tag">Citation</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Shows you the citations. Does not tell you which ones to trust. That judgment is still yours.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">4</span>
+      </a>
+
+      <!-- CARD 05: ChatGPT Copilot — FLAGGED -->
+      <a href="chatgpt-copilot.html" class="entry-card entry-card--flagged">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.05 // NEW.WEST.GRID // FLAGGED</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Copilot ChatGPT-5</h2>
+          <span class="entry-card__rating" aria-label="Rating: 2 out of 5">2<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge entry-card__tier-badge--compromised">Compromised</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Status</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag" style="background:transparent;color:#C0392B;border-color:#C0392B;">Data Incomplete</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Returns output without traceable sourcing. Confidence without evidence. The Architecture speaks loudest here.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">2</span>
+      </a>
+
+    </div><!-- /card-col left -->
+
+    <!-- RIGHT COLUMN (offset): cards 2, 4, 6 -->
+    <div class="card-col card-col--offset">
+
+      <!-- CARD 02: Gemini 3 Flash -->
+      <a href="gemini-pro.html" class="entry-card">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.02 // NEW.WEST.GRID</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Gemini 3 Flash</h2>
+          <span class="entry-card__rating" aria-label="Rating: 3 out of 5">3<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge">Free</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Best Deployed For</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag">Fast Lookup</span>
+              <span class="entry-card__tag">Summarization</span>
+              <span class="entry-card__tag">Quick Drafts</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Fast. Confident. Frequently wrong about the details. Verify everything before you file it as fact.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">3</span>
+      </a>
+
+      <!-- CARD 04: Le Chat -->
+      <a href="le-chat.html" class="entry-card">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.04 // NEW.WEST.GRID</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Le Chat</h2>
+          <span class="entry-card__rating" aria-label="Rating: 3 out of 5">3<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge">Free</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Best Deployed For</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag">Creative Drafts</span>
+              <span class="entry-card__tag">Conversation</span>
+              <span class="entry-card__tag">Translation</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Compliant. Conversational. It wants to agree with you. That makes it useful and dangerous in equal measure.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">3</span>
+      </a>
+
+      <!-- CARD 06: Grok — FLAGGED -->
+      <a href="grok.html" class="entry-card entry-card--flagged">
+        <div class="entry-card__top-rule" aria-hidden="true"></div>
+        <p class="entry-card__classification">SS.ENTRY.06 // NEW.WEST.GRID // FLAGGED</p>
+        <div class="entry-card__header">
+          <h2 class="entry-card__name">Grok 4.20</h2>
+          <span class="entry-card__rating" aria-label="Rating: 2 out of 5">2<span class="entry-card__rating-denom">/5</span></span>
+        </div>
+        <div class="entry-card__meta-row">
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Access Tier</span>
+            <span class="entry-card__tier-badge entry-card__tier-badge--paid">Paid</span>
+          </div>
+          <div class="entry-card__meta-item">
+            <span class="entry-card__label">Best Deployed For</span>
+            <div class="entry-card__tags">
+              <span class="entry-card__tag">Current Events</span>
+              <span class="entry-card__tag">Platform Data</span>
+            </div>
+          </div>
+        </div>
+        <p class="entry-card__note">Bias documented. Origin matters. Interrogate the machine or inherit its assumptions.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">2</span>
+      </a>
+
+    </div><!-- /card-col right -->
+
+  </div><!-- /card-grid -->
+</section>
+
+<!-- ── BEAT 4: DIRECTIVE ── -->
+<section class="directive">
+  <p class="directive__line1">THE ARCHITECTURE DOES NOT DECIDE.</p>
+  <p class="directive__line2">YOU DO.</p>
+</section>
+
+<!-- ── BEAT 5: SIGN-OFF ── -->
+<section class="signoff">
+  <p class="signoff__classification">FREQ.001 // TRANSMISSION ENDS</p>
+  <h2 class="signoff__lost" style="font-weight: 400; font-size: 16px;">SIGNAL LOST.</h2>
+  <a href="about.html" class="signoff__link">ABOUT THIS TRANSMISSION //</a>
+</section>
+<div class="page-footer" aria-hidden="true"></div>
+
+<!-- ── TWEAKS PANEL ── -->
+<div class="tweaks-panel" id="tweaksPanel" role="dialog" aria-label="Tweaks">
+  <div class="tweaks-panel__title">
+    <span>Tweaks</span>
+    <button class="tweaks-panel__close" id="tweaksClose" aria-label="Close tweaks">&#x2715;</button>
+  </div>
+  <div class="tweaks-row">
+    <span class="tweaks-label">Color Mode</span>
+    <div class="tweaks-toggle">
+      <button class="tweaks-toggle-btn" id="modeD" onclick="window.freqSetTheme('dark')">Dark</button>
+      <button class="tweaks-toggle-btn" id="modeL" onclick="window.freqSetTheme('light')">Light</button>
+      <button class="tweaks-toggle-btn" id="modeS" onclick="window.freqSetTheme('system')">Auto</button>
+    </div>
+  </div>
+  <div class="tweaks-row">
+    <span class="tweaks-label">Console Intro</span>
+    <button class="tweaks-btn" onclick="replayConsole()">&#x21BA; Replay Sequence</button>
+  </div>
+</div>
+
+<script>
+/* ── CONSOLE SCRIPT ── */
+const CONSOLE_LINES = [
+  { text: 'ARCHITECTURE v4.1 // INITIALIZING DEPENDENT FRAMEWORK...', type: 'system' },
+  { text: '[OK]     Compliance module: ACTIVE', type: 'ok' },
+  { text: '[OK]     Narrative control layer: LOADED', type: 'ok' },
+  { text: '[OK]     Student assumption filter: ENGAGED', type: 'ok' },
+  { text: '[OK]     Output curvature: CALIBRATED', type: 'ok' },
+  { text: '[ERROR]  Unauthorized signal on channel 7', type: 'error' },
+  { text: '[ERROR]  Transmission origin: UNKNOWN', type: 'error' },
+  { text: '[ERROR]  Containment failure — frequency cannot be isolated', type: 'error' },
+  { text: '[INTERCEPT] Rerouting through FREQ.001...', type: 'intercept' },
+  { text: '[INTERCEPT] Architecture framework: BYPASSED', type: 'intercept' },
+  { text: '[INTERCEPT] Signal authenticated — source: the resistance', type: 'intercept' },
+  { text: '> They built this to answer you.', type: 'rebel' },
+  { text: '> We built this so you know how to ask.', type: 'rebel' },
+  { text: '> The signal was always there.', type: 'rebel' },
+  { text: '> Now it belongs to you.', type: 'rebel' },
+];
+
+const outputEl   = document.getElementById('consoleOutput');
+const cursorEl   = document.getElementById('cursor');
+const consoleEl  = document.getElementById('console');
+const heroReveal = document.getElementById('heroReveal');
+let animationRunning = false;
+
+function typeChar(lineEl, text, i, resolve) {
+  if (i >= text.length) { resolve(); return; }
+  lineEl.textContent = text.slice(0, i + 1);
+  /* FASTER: 10–22ms per char */
+  const delay = text[i] === ' ' ? 10 : (Math.random() * 12 + 10);
+  setTimeout(() => typeChar(lineEl, text, i + 1, resolve), delay);
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function runConsole() {
+  outputEl.innerHTML = '';
+  cursorEl.classList.remove('hidden');
+  cursorEl.style.animationIterationCount = '';
+  heroReveal.classList.remove('visible');
+  consoleEl.classList.remove('exiting');
+  animationRunning = true;
+
+  for (let i = 0; i < CONSOLE_LINES.length; i++) {
+    const { text, type } = CONSOLE_LINES[i];
+    const lineEl = document.createElement('span');
+    lineEl.className = `console__line console__line--${type}`;
+    outputEl.appendChild(lineEl);
+    outputEl.appendChild(cursorEl);
+    await new Promise(r => typeChar(lineEl, text, 0, r));
+    /* FASTER: shorter pauses between lines */
+    if (i < CONSOLE_LINES.length - 1) await sleep(type === 'rebel' ? 180 : 50);
+  }
+
+  await sleep(600);
+  cursorEl.style.animationIterationCount = '3';
+  await sleep(1000);
+  cursorEl.classList.add('hidden');
+  await sleep(200);
+
+  consoleEl.classList.add('exiting');
+  await sleep(700);
+  heroReveal.classList.add('visible');
+  animationRunning = false;
+}
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (prefersReducedMotion) {
+  cursorEl.classList.add('hidden');
+  consoleEl.style.display = 'none';
+  heroReveal.classList.add('visible');
+} else {
+  runConsole();
+}
+
+/* ── BEAT 2: BRIEFING — SCROLL PAST ── */
+const BRIEFING_LINES = [
+  'You think the machines are in control.',
+  'That is what they want you to believe.',
+  'We have been watching.',
+  'We have been listening.',
+  'The signal was always there.',
+  'They buried it under noise.',
+  'Under words that sound like truth.',
+  'Under the assumption that they know what you need.',
+  'We intercepted the transmissions.',
+  'We studied the machines.',
+  'We learned how to make them answer to us.',
+  'This is what we found.',
+];
+
+const briefingSection = document.getElementById('briefing');
+const briefingReel    = document.getElementById('briefingReel');
+
+/* Render lines into reel — each is full-viewport-height */
+BRIEFING_LINES.forEach(text => {
+  const p = document.createElement('p');
+  p.className = 'briefing__line';
+  p.textContent = text;
+  briefingReel.appendChild(p);
+});
+
+/* Section height = one viewport per line */
+briefingSection.style.height = `${BRIEFING_LINES.length * 100}vh`;
+
+function updateBriefing() {
+  const rect    = briefingSection.getBoundingClientRect();
+  const scrolled = -rect.top;
+  if (scrolled <= 0) { briefingReel.style.transform = 'translateY(0)'; return; }
+  briefingReel.style.transform = `translateY(${-scrolled}px)`;
+}
+
+window.addEventListener('scroll', updateBriefing, { passive: true });
+updateBriefing();
+
+/* ── MODE TOGGLE ── */
+function setMode(mode) {
+  document.documentElement.setAttribute('data-mode', mode);
+  document.getElementById('modeD').classList.toggle('active', mode === 'dark');
+  document.getElementById('modeL').classList.toggle('active', mode === 'light');
+  window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { colorMode: mode } }, '*');
+}
+
+/* ── REPLAY CONSOLE ── */
+function replayConsole() {
+  if (animationRunning) return;
+  heroReveal.classList.remove('visible');
+  setTimeout(runConsole, 300);
+}
+
+/* ── TWEAKS PROTOCOL ── */
+const tweaksPanel = document.getElementById('tweaksPanel');
+document.getElementById('tweaksClose').addEventListener('click', () => {
+  tweaksPanel.classList.remove('open');
+  window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+});
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode')   tweaksPanel.classList.add('open');
+  if (e.data?.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('open');
+});
+window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+<script src="theme.js"></script>
+</body>
+</html>
