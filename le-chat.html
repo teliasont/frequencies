@@ -645,40 +645,6 @@
       border-radius: 1px;
     }
 
-    /* ── TWEAKS PANEL ── */
-    .tweaks-panel {
-      position: fixed; bottom: var(--space-lg); right: var(--space-lg); z-index: 500;
-      background: var(--bg-subtle); border: 1px solid var(--border-strong);
-      padding: var(--space-md); width: 220px;
-      display: none; flex-direction: column; gap: var(--space-md);
-    }
-    .tweaks-panel.open { display: flex; }
-    .tweaks-panel__title {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.2em; color: var(--text-tertiary);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .tweaks-panel__close {
-      background: none; border: none; cursor: pointer; color: var(--text-tertiary);
-      font-family: var(--font-mono); font-size: 11px; padding: 0;
-    }
-    .tweaks-panel__close:hover { color: var(--accent); }
-    .tweaks-row { display: flex; flex-direction: column; gap: var(--space-xs); }
-    .tweaks-label {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--text-secondary);
-    }
-    .tweaks-toggle { display: flex; gap: var(--space-xs); }
-    .tweaks-toggle-btn {
-      flex: 1; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.1em; padding: 6px 4px; background: none;
-      border: 1px solid var(--border); color: var(--text-tertiary);
-      cursor: pointer; transition: all 0.15s; text-align: center;
-    }
-    .tweaks-toggle-btn.active {
-      background: var(--signal-subtle); border-color: var(--signal); color: var(--signal-text);
-    }
-
     /* ── THEME TOGGLE BUTTON ── */
     .nav-theme-btn {
       background: none; border: none; cursor: pointer;
@@ -748,21 +714,6 @@
     </ul>
   </nav>
 
-  <!-- ── TWEAKS PANEL ── -->
-  <div class="tweaks-panel" id="tweaksPanel" role="dialog" aria-label="Tweaks">
-    <div class="tweaks-panel__title">
-      <span>Tweaks</span>
-      <button class="tweaks-panel__close" id="tweaksClose" aria-label="Close tweaks">&#x2715;</button>
-    </div>
-    <div class="tweaks-row">
-      <span class="tweaks-label">Color Mode</span>
-      <div class="tweaks-toggle">
-        <button class="tweaks-toggle-btn" id="modeD" onclick="window.freqSetTheme('dark')">Dark</button>
-        <button class="tweaks-toggle-btn" id="modeL" onclick="window.freqSetTheme('light')">Light</button>
-        <button class="tweaks-toggle-btn" id="modeS" onclick="window.freqSetTheme('system')">Auto</button>
-      </div>
-    </div>
-  </div>
 
   <div class="page-body">
 
@@ -850,8 +801,8 @@
             </div>
           </div>
 
-          <div class="paper__bg-number" aria-hidden="true">4</div>
         </div>
+        <div class="paper__bg-number" aria-hidden="true">4</div>
       </div>
     </section>
 
@@ -868,18 +819,6 @@
   </div>
 
   <script src="theme.js"></script>
-  <script>
-    /* ── TWEAKS PANEL ── */
-    const tweaksPanel = document.getElementById('tweaksPanel');
-    document.getElementById('tweaksClose').addEventListener('click', () => {
-      tweaksPanel.classList.remove('open');
-      window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
-    });
-    window.addEventListener('message', e => {
-      if (e.data?.type === '__activate_edit_mode')   tweaksPanel.classList.add('open');
-      if (e.data?.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('open');
-    });
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-  </script>
+
 </body>
 </html>
