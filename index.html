@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FREQUENCIES // FREQ.001</title>
+  <title>FREQUENCIES</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:wght@400;700;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -222,6 +222,13 @@
       box-shadow: 2px 3px 0 #A09890, 4px 6px 0 rgba(0,0,0,0.18);
       border-radius: 0;
     }
+    .entry-card {
+  transition: transform 0.2s ease;
+}
+.entry-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 2px 7px 0 #A09890, 4px 10px 0 rgba(0,0,0,0.22);
+}
     .entry-card__top-rule {
       height: 4px; background: #F2454F;
       margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-md);
@@ -286,9 +293,9 @@
       margin-top: 20vh;
     }
     .directive__line1 {
-      font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 4rem);
+      font-family: var(--font-display); font-size: clamp(2.85rem, 4.5vw, 4rem);
       font-weight: 700; text-transform: uppercase; color: var(--text); line-height: 1.15;
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--space-xs);
     }
     .directive__line2 {
       font-family: var(--font-display); font-size: clamp(5rem, 13vw, 9rem);
@@ -302,9 +309,9 @@
       text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: var(--space-md);
     }
     .signoff__lost {
-      font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 700; text-transform: uppercase; color: var(--text-tertiary);
-      margin-bottom: var(--space-xl);
+      font-family: var(--font-mono); font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700; text-transform: uppercase; color: var(--danger);
+      margin-bottom: var(--space-md);
     }
     .signoff__link {
       font-family: var(--font-mono); font-size: 12px; color: var(--signal-text);
@@ -364,7 +371,7 @@
 <section class="hero" style="background-color: var(--bg-wall)">
   <button class="hero__replay" id="heroReplay" aria-label="Replay transmission sequence">REPLAY //</button>
   <div class="console" id="console" role="region" aria-label="Transmission Sequence">
-    <div class="console__header">FREQ.001 // UNAUTHORIZED TERMINAL</div>
+    <div class="console__header">UNAUTHORIZED TERMINAL</div>
     <div class="console__output" id="consoleOutput"></div>
     <span class="console__cursor" id="cursor" aria-hidden="true"></span>
   </div>
@@ -412,7 +419,7 @@
         <div class="entry-card__meta-row">
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Access Tier</span>
-            <span class="entry-card__tier-badge">Free / Paid</span>
+            <span class="entry-card__tier-badge">Free</span>
           </div>
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Best Deployed For</span>
@@ -438,7 +445,7 @@
         <div class="entry-card__meta-row">
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Access Tier</span>
-            <span class="entry-card__tier-badge">Free / Paid</span>
+            <span class="entry-card__tier-badge">Free</span>
           </div>
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Best Deployed For</span>
@@ -449,7 +456,7 @@
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Provides many citations. Which to trust are up to you to decide.</p>
+        <p class="entry-card__note">Provides many citations. Which to trust are up to the individuals to decide.</p>
         <span class="entry-card__bg-number" aria-hidden="true">3</span>
       </a>
 
@@ -464,7 +471,7 @@
         <div class="entry-card__meta-row">
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Access Tier</span>
-            <span class="entry-card__tier-badge entry-card__tier-badge--compromised">Compromised</span>
+            <span class="entry-card__tier-badge entry-card__tier-badge--compromised">Institutional</span>
           </div>
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Status</span>
@@ -473,8 +480,8 @@
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Returns output without traceable sourcing. Confidence without evidence. The Architecture speaks loudest here.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">2</span>
+        <p class="entry-card__note">Returns output without traceable sourcing. Bold confidence without evidence. Provides over-detailed reports for even meager tasks. Technical difficulties occurred during reconiscence.<p>
+        <span class="entry-card__bg-number" aria-hidden="true">5</span>
       </a>
 
     </div><!-- /card-col left -->
@@ -493,7 +500,7 @@
         <div class="entry-card__meta-row">
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Access Tier</span>
-            <span class="entry-card__tier-badge">Free</span>
+            <span class="entry-card__tier-badge">Institutional</span>
           </div>
           <div class="entry-card__meta-item">
             <span class="entry-card__label">Best Deployed For</span>
@@ -504,8 +511,8 @@
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Fast. Confident. Frequently wrong about the details. Verify everything before you file it as fact.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">3</span>
+        <p class="entry-card__note">Fast. Confident. Occasionally wrong about the details. Verification of files is critical.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">2</span>
       </a>
 
       <!-- CARD 04: Le Chat -->
@@ -525,13 +532,13 @@
             <span class="entry-card__label">Best Deployed For</span>
             <div class="entry-card__tags">
               <span class="entry-card__tag">Creative Drafts</span>
-              <span class="entry-card__tag">Conversation</span>
+              <span class="entry-card__tag">Summarization</span>
               <span class="entry-card__tag">Translation</span>
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Compliant. Conversational. It wants to agree with you. That makes it useful and dangerous in equal measure.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">3</span>
+        <p class="entry-card__note">Compliant. Prone to summarization over conversation. </p>
+        <span class="entry-card__bg-number" aria-hidden="true">4</span>
       </a>
 
       <!-- CARD 06: Grok — FLAGGED -->
@@ -552,11 +559,12 @@
             <div class="entry-card__tags">
               <span class="entry-card__tag">Current Events</span>
               <span class="entry-card__tag">Platform Data</span>
+              <span class="entry-card__tag">Non-Textual Examples</span>
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Bias documented. Origin matters. Interrogate the machine or inherit its assumptions.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">2</span>
+        <p class="entry-card__note">Questionable bias documented. Provides visual examples through pictures and videos.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">6</span>
       </a>
 
     </div><!-- /card-col right -->
@@ -566,14 +574,14 @@
 
 <!-- ── BEAT 4: DIRECTIVE ── -->
 <section class="directive">
-  <p class="directive__line1">THE ARCHITECTURE DOES NOT DECIDE.</p>
+  <p class="directive__line1">THE ARCHITECTURE<br>DOES NOT DECIDE.</p>
   <p class="directive__line2">YOU DO.</p>
 </section>
 
 <!-- ── BEAT 5: SIGN-OFF ── -->
 <section class="signoff">
-  <p class="signoff__classification">FREQ.001 // TRANSMISSION ENDS</p>
-  <h2 class="signoff__lost" style="font-weight: 400; font-size: 16px;">SIGNAL LOST.</h2>
+    <h2 class="signoff__classification">SIGNAL LOST.</h2>
+  <p class="signoff__classification">// TRANSMISSION ENDS</p>
   <a href="about.html" class="signoff__link">ABOUT THIS TRANSMISSION //</a>
 </section>
 <div class="page-footer" aria-hidden="true"></div>
