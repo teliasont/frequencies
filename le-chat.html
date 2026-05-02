@@ -166,14 +166,34 @@
       background-color: #F2454F;
     }
 
-    .paper__inner {
-      padding: 40px;
-      padding-top: 44px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+      .paper__inner {
+  padding: 40px;
+  padding-top: 44px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  /* For edits to the Firefox scrollbar*/
+  scrollbar-width: thin;
+  scrollbar-color: #B0A8A4 transparent;
+}
+
+.paper__inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.paper__inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.paper__inner::-webkit-scrollbar-thumb {
+  background: #B0A8A4;
+}
+
+.paper__inner::-webkit-scrollbar-thumb:hover {
+  background: #6B6360;
+}
 
     .paper__classification {
       font-family: var(--font-mono);
@@ -269,7 +289,7 @@
       padding: 2px 6px;
     }
 
-    .paper__bg-number {
+   .paper__bg-number {
       position: absolute;
       bottom: 24px;
       right: 28px;
@@ -581,10 +601,10 @@
     }
 
     /* FOOTER NAV */
-    .footer-nav {
+     .footer-nav {
       max-width: 620px;
       margin: 0 auto;
-      padding: 0 var(--space-xl) var(--space-2xl);
+      padding: var(--space-2xl) var(--space-xl) var(--space-2xl);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -751,7 +771,7 @@
       <div class="paper">
         <div class="paper__top-stripe" aria-hidden="true"></div>
         <div class="paper__inner">
-          <p class="paper__classification">SS.ENTRY.05 // NEW.WEST.GRID // INTELLIGENCE DOSSIER</p>
+          <p class="paper__classification">SS.ENTRY.04 // RED.SHIFT.GRID // INTELLIGENCE DOSSIER</p>
           <h1 class="paper__model-name">LE<br>CHAT</h1>
           <div class="paper__rule" aria-hidden="true"></div>
 
@@ -762,7 +782,7 @@
             </div>
             <div class="paper__field">
               <span class="paper__field-label">Tier</span>
-              <span class="paper__field-value">Most Capable</span>
+              <span class="paper__field-value">Default</span>
             </div>
             <div class="paper__field">
               <span class="paper__field-label">Limit Hit</span>
@@ -780,10 +800,8 @@
           <div class="paper__field">
             <span class="paper__field-label">Best Deployed For</span>
             <div class="paper__tags">
-              <span class="paper__tag">Something I Love</span>
               <span class="paper__tag">Learn Something New</span>
               <span class="paper__tag">Design Challenge</span>
-              <span class="paper__tag">Design Concept</span>
               <span class="paper__tag">Design Problem</span>
             </div>
           </div>
@@ -792,7 +810,7 @@
           <div class="paper__report-divider" aria-hidden="true"></div>
 
           <div class="paper__report-header">
-            <span class="paper__report-header-label">Intelligence Report // SS.ENTRY.05</span>
+            <span class="paper__report-header-label">Intelligence Report // SS.ENTRY.04</span>
             <div class="paper__report-header-rule" aria-hidden="true"></div>
           </div>
 
@@ -803,7 +821,7 @@
             </div>
             <div class="paper__metadata-cell">
               <span class="paper__metadata-label">Classification</span>
-              <span class="paper__metadata-value paper__metadata-value--secondary">SS.ENTRY.05</span>
+              <span class="paper__metadata-value paper__metadata-value--secondary">SS.ENTRY.04</span>
             </div>
             <div class="paper__metadata-cell">
               <span class="paper__metadata-label">Status</span>
@@ -818,45 +836,26 @@
           <div class="paper__report-subs">
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Observed Behavior</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro sustains coherent, extended exchanges without losing the thread of the original prompt. It surfaces alternate interpretations of a question before committing to an answer — a useful signal when the query itself contains assumptions worth interrogating. Under repeated pressure, it holds its position rather than capitulating, though it will revise when presented with evidence. Response length tracks query complexity with reasonable discipline.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Our informants report Le Chat is the dullest of the models tested. Not much stood out, either positively or negatively. Conversations feel more like summaries. It seems to handle creative brainstorming to a decent degree. While perhaps slightly on the longer side, informants did not have to filter out as much filler as other models.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Operational Strengths</p>
-              <p class="paper__report-sub-body" style="text-align: left">Strong cross-domain synthesis — the asset moves from technical specificity to broad conceptual framing without losing accuracy. Brainstorming tasks yield output that resists obvious directions. Conversational register is adjustable; the model responds to tonal shifts in the operator's prompts without requiring explicit instruction. Useful for exploratory work where the output is a starting condition, not a final product.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Informants noted this model worked best when handling comparisons, critiques, or brainstorming ideas with the user. It breaks ideas down into bullet points, enhancing readibility and scanning for key points.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Known Limitations</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro defaults toward completeness over precision — responses are thorough to a fault when brevity is called for. The operator must supply direction or the model fills the vacuum with safe, averaged output. It does not flag its own uncertainty with consistency; confident-sounding answers may rest on shallow inference. Access restricted to EWU credentials; reliability under institutional network conditions has not been verified.</p>
+              <p class="paper__report-sub-body" style="text-align: left">The model is not particularly strong in conversation. It leaves out specifics and informants reported the responses felt like reading a summarization of the topic. While the bullet points may assist breaking up long paragraphs, the model often ends up with long responses with too many bullet points.</p>
             </div>
           </div>
 
-          <div class="paper__bg-number" aria-hidden="true">3</div>
+          <div class="paper__bg-number" aria-hidden="true">4</div>
         </div>
       </div>
     </section>
 
-    <!-- INTELLIGENCE REPORT SECTION -->
-    <section class="report-section" aria-label="Intelligence Report — Gemini 3.1 Pro">
-
-      <!-- OPERATOR ASSESSMENT -->
-      <aside class="operator-assessment" aria-label="Operator Assessment">
-        <p class="operator-assessment__label">Operator Assessment // SS.ENTRY.04</p>
-        <p class="operator-assessment__status">Reliable — Deploy with Direction</p>
-        <p class="operator-assessment__prose">The machine does not decide what the work is. You do. Gemini 3.1 Pro is a capable instrument, and like all instruments it will follow whoever is holding it. Supply a clear objective and a specific constraint and the output is worth examining. Leave the objective open and the machine will fill it with consensus. That is not the machine's failure. That is yours.</p>
-        <div class="operator-assessment__rule" aria-hidden="true"></div>
-        <div class="operator-assessment__directive">
-          <span class="operator-assessment__directive-label">Directive //</span>
-          <span class="operator-assessment__directive-text">Define the question before you deploy the asset. The model reflects your precision back at you.</span>
-        </div>
-      </aside>
-
-      <!-- EVIDENCE FILE LINK -->
-      <div class="evidence-block">
-        <span class="evidence-block__label">Intercept Record Available</span>
-        <a href="#" class="evidence-block__link">VIEW FULL INTERCEPT RECORD //</a>
-      </div>
+    
 
       <!-- FOOTER NAVIGATION -->
       <nav class="footer-nav" aria-label="Page navigation">
