@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FREQUENCIES — Behind the Signal</title>
+  <title>Behind the Signal // FREQUENCIES</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:wght@400;700;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -303,6 +303,29 @@
       z-index: 2;
     }
 
+    .paper {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.paper:hover {
+  transform: translateY(-16px) rotate(0deg) scale(1.04) !important;
+  box-shadow: 4px 12px 0 var(--paper-border), 10px 20px 0 rgba(0,0,0,0.28);
+  z-index: 10;
+}
+
+.paper--3:hover {
+  transform: translateX(-50%) translateY(-16px) rotate(0deg) scale(1.04) !important;
+}
+
+@media (max-width: 900px) {
+  .paper:hover {
+    transform: none !important;
+    box-shadow: 2px 3px 0 var(--paper-border), 6px 10px 0 rgba(0,0,0,0.22);
+  }
+}
+
     /* ═══════════════════════════════════════════
        SIGN-OFF
     ═══════════════════════════════════════════ */
@@ -394,42 +417,7 @@
     .nav-theme-btn:hover { color: var(--text); }
     .nav-theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 1px; }
 
-    /* ═══════════════════════════════════════════
-       TWEAKS PANEL
-    ═══════════════════════════════════════════ */
-    .tweaks-panel {
-      position: fixed; bottom: var(--space-lg); right: var(--space-lg); z-index: 500;
-      background: var(--bg-subtle); border: 1px solid var(--border-strong);
-      padding: var(--space-lg); width: 220px;
-      display: none; flex-direction: column; gap: var(--space-md);
-    }
-    .tweaks-panel.open { display: flex; }
-    .tweaks-panel__title {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.2em; color: var(--text-tertiary);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .tweaks-panel__close {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-tertiary); font-family: var(--font-mono); font-size: 11px; padding: 0;
-    }
-    .tweaks-panel__close:hover { color: var(--accent); }
-    .tweaks-row { display: flex; flex-direction: column; gap: var(--space-xs); }
-    .tweaks-label {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--text-secondary);
-    }
-    .tweaks-toggle { display: flex; gap: var(--space-xs); }
-    .tweaks-toggle-btn {
-      flex: 1; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.1em; padding: 6px 4px; background: none;
-      border: 1px solid var(--border); color: var(--text-tertiary);
-      cursor: pointer; transition: all 0.15s; text-align: center;
-    }
-    .tweaks-toggle-btn.active {
-      background: var(--signal-subtle); border-color: var(--signal); color: var(--signal-text);
-    }
-
+   
     /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
@@ -490,62 +478,64 @@
     <div class="desk__surface">
 
       <!-- Sheet 1 -->
-      <article class="paper paper--1" aria-label="Paper 1: Initial Build">
+      <article class="paper paper--1" aria-label="Paper 1: Initial Brief">
         <div class="paper__stripe" aria-hidden="true"></div>
         <div class="paper__body">
-          <p class="paper__classification">ENTRY.01 // INITIAL BUILD</p>
-          <h2 class="paper__heading">BUILDING THE FIRST PAGE</h2>
+          <p class="paper__classification">ENTRY.01 // INITIAL BRIEF</p>
+          <h2 class="paper__heading">ABOUT THIS PROJECT</h2>
           <hr class="paper__rule" aria-hidden="true">
-          <p class="paper__prose">Placeholder — describe what the first build attempt looked like and what the initial prompt covered.</p>
-          <p class="paper__date">DATE // [PLACEHOLDER]</p>
+          <p class="paper__prose">This project was an assignment from an AI + Design class, centered around informing design students how to find a way to make AI work for them. As part of this project, I tested 6 different AI models, alongside some of their different tiers, with 5 different prompts. I collected my findings into this website.</p>
+          <p class="paper__date">DATE // 13.04.2026</p>
         </div>
       </article>
 
       <!-- Sheet 2 -->
-      <article class="paper paper--2" aria-label="Paper 2: First Failure">
+      <article class="paper paper--2" aria-label="Paper 2: Design System Draft">
         <div class="paper__stripe" aria-hidden="true"></div>
         <div class="paper__body">
-          <p class="paper__classification">ENTRY.02 // FIRST FAILURE</p>
-          <h2 class="paper__heading">WHEN THE LAYOUT BROKE</h2>
+          <p class="paper__classification">ENTRY.02 // DESIGN SPECS</p>
+          <h2 class="paper__heading">DRAFTING THE LOOK</h2>
           <hr class="paper__rule" aria-hidden="true">
-          <p class="paper__prose">Placeholder — describe the first thing that went wrong and how it looked versus how it was supposed to look.</p>
-          <p class="paper__date">DATE // [PLACEHOLDER]</p>
+          <p class="paper__prose">After I had collected my data, it was time to start thinking about what I wanted the field guide to look like. I'm a big fan of science fiction and dystopian settings, and an even bigger fan of the band Starset. This project is heavily inspired by the DIVISIONS era as I love the dystopian mood of the Brain Machine Interfaces (BMIs). BMIs are a variation of a classic sci-fi staple: chips you can plug directly into your brain and experience a new reality. I figured it felt relevant.<br> I wanted to get the feel of a technological dystopia ruled by machines with people working to resist them. This site is set in that narrative, with a group hijacking the machine's transmissions to let others know they can take control.<br>I picked out my key colors, fonts, look, and feel of the website before using Claude Sonnet 4.6 to draft a full design system from my input.</p>
+          <p class="paper__date">DATE // 20.04.2026</p>
         </div>
       </article>
 
-      <!-- Sheet 3 — Center focal point -->
-      <article class="paper paper--3" aria-label="Paper 3: Iteration">
+     
+
+      <!-- Sheet 3 -->
+      <article class="paper paper--4" aria-label="Paper 3: What Broke">
         <div class="paper__stripe" aria-hidden="true"></div>
         <div class="paper__body">
-          <p class="paper__classification">ENTRY.03 // ITERATION</p>
-          <h2 class="paper__heading">FIXING IT WITH A BETTER PROMPT</h2>
+          <p class="paper__classification">ENTRY.03 // WORKING WITH FIGMA MAKE</p>
+          <h2 class="paper__heading">FIRST DRAFT</h2>
           <hr class="paper__rule" aria-hidden="true">
-          <p class="paper__prose">Placeholder — describe how you rephrased the prompt and what changed in the output.</p>
-          <p class="paper__date">DATE // [PLACEHOLDER]</p>
+          <p class="paper__prose">My professor initally had us take our design system to Figma Make to create the field guide. I tried to work with it, but it was frustrating. Figma Make would forget adjustments I made between one version and the next or misinterpert my prompt. Plus, even just building the first draft, I was burning through tokens like mad. The next class, after much grumbling, the professor suggested some alternatives we could use instead of Figma Make. My first draft is still live and can be found <a href="https://silk-board-83314236.figma.site/" target="_blank">here</a>.</p>
+          <p class="paper__date">DATE // 26.04.2026</p>
         </div>
       </article>
 
       <!-- Sheet 4 -->
-      <article class="paper paper--4" aria-label="Paper 4: What Broke">
+      <article class="paper paper--5" aria-label="Paper 3: What I Learned">
         <div class="paper__stripe" aria-hidden="true"></div>
         <div class="paper__body">
-          <p class="paper__classification">ENTRY.04 // WHAT BROKE</p>
-          <h2 class="paper__heading">WHERE FIGMA MAKE GOT STUCK</h2>
+          <p class="paper__classification">ENTRY.04 // WORKING WITH CLAUDE DESIGN</p>
+          <h2 class="paper__heading">BUILDING THE GUIDE</h2>
           <hr class="paper__rule" aria-hidden="true">
-          <p class="paper__prose">Placeholder — describe a specific moment where the tool could not execute what you asked and what you did instead.</p>
-          <p class="paper__date">DATE // [PLACEHOLDER]</p>
+          <p class="paper__prose">I moved from Figma Make to the newly released Claude Design. I used Claude Sonnet to fully detail each section of this website so I didn't run into as many hiccups as I did with Figma Make. I had a mental image of what I wanted this website to look like, so I decribed my vision to Claude to develop a structure and later a prompt for Claude Design. This was a much smoother process. The structure of this website required minimal tweaking. I went through and rewrote and replaced the placeholder text of each model with information pulled from my research. While keeping the wording mostly in the tone of the narrative I developed, I used my research and thoughts about the models to fill out each report.</p>
+          <p class="paper__date">DATE // 30.04.2025</p>
         </div>
       </article>
 
-      <!-- Sheet 5 -->
-      <article class="paper paper--5" aria-label="Paper 5: What I Learned">
+       <!-- Sheet 5 — Center focal point -->
+      <article class="paper paper--3" aria-label="Paper 5: Iteration">
         <div class="paper__stripe" aria-hidden="true"></div>
         <div class="paper__body">
-          <p class="paper__classification">ENTRY.05 // WHAT I LEARNED</p>
+          <p class="paper__classification">ENTRY.05 // RESULTS</p>
           <h2 class="paper__heading">WHAT WORKING WITH AI ACTUALLY TAUGHT ME</h2>
           <hr class="paper__rule" aria-hidden="true">
-          <p class="paper__prose">Placeholder — describe what this process revealed about working with AI as a design tool.</p>
-          <p class="paper__date">DATE // [PLACEHOLDER]</p>
+          <p class="paper__prose">The best results stem from when you come in with a plan, an idea, even just an inkling of a thought. You direct the conversation. You push back. You keep the train on the tracks. A clear vision means a clear goal to work towards. I'm happy with how this site turned out. I think it is pretty close to what I had in mind throughout the process because I knew what I wanted and I could direct the model accordingly. AI can be a useful tool, but only if you are willing to put in the work. Don't let it take the creative components away from you.</p>
+          <p class="paper__date">DATE // 01.05.2026</p>
         </div>
       </article>
 
@@ -556,9 +546,9 @@
   <section class="signoff" aria-label="Transmission Sign-off">
     <div class="signoff__inner">
       <p class="signoff__label">TRANSMISSION DOCUMENTED BY //</p>
-      <p class="signoff__name">[YOUR NAME]</p>
-      <p class="signoff__course">[COURSE] // [DATE]</p>
-      <p class="signoff__closing">Placeholder — one closing sentence. Personal. Written by the author.</p>
+      <p class="signoff__name">Tayla Eliason</p>
+      <p class="signoff__course">AI + DESIGN // 02.05.2026</p>
+      <p class="signoff__closing">Co-created with Claude Sonnet and Claude Design. Models were tested between 06.04.2026 and 13.04.2026. Website constructed with Claude Design, powered by Claude Opus 4.7 between 22.04.2026 and 02.05.2026.</p>
       <a href="index.html" class="signoff__link">RETURN TO GRID //</a>
     </div>
   </section>
@@ -566,36 +556,10 @@
   <!-- Footer stripe -->
   <div class="footer-stripe" aria-hidden="true"></div>
 
-  <!-- Tweaks Panel -->
-  <div class="tweaks-panel" id="tweaksPanel" role="dialog" aria-label="Tweaks">
-    <div class="tweaks-panel__title">
-      <span>Tweaks</span>
-      <button class="tweaks-panel__close" id="tweaksClose" aria-label="Close tweaks">&#x2715;</button>
-    </div>
-    <div class="tweaks-row">
-      <span class="tweaks-label">Color Mode</span>
-      <div class="tweaks-toggle">
-        <button class="tweaks-toggle-btn" id="modeD" onclick="window.freqSetTheme('dark')">Dark</button>
-        <button class="tweaks-toggle-btn" id="modeL" onclick="window.freqSetTheme('light')">Light</button>
-        <button class="tweaks-toggle-btn" id="modeS" onclick="window.freqSetTheme('system')">Auto</button>
-      </div>
-    </div>
-  </div>
+
 
   <script src="theme.js"></script>
-  <script>
-    /* ── TWEAKS PROTOCOL ── */
-    const tweaksPanel = document.getElementById('tweaksPanel');
-    document.getElementById('tweaksClose').addEventListener('click', () => {
-      tweaksPanel.classList.remove('open');
-      window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
-    });
-    window.addEventListener('message', e => {
-      if (e.data?.type === '__activate_edit_mode')   tweaksPanel.classList.add('open');
-      if (e.data?.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('open');
-    });
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-  </script>
+  
 
 </body>
 </html>
