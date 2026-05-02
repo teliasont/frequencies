@@ -74,6 +74,20 @@
     .nav-theme-btn:hover { color: var(--text); }
     .nav-theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 1px; }
 
+    /* ── HERO REPLAY BUTTON ── */
+    .hero__replay {
+      position: absolute; top: 16px; right: 16px; z-index: 10;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 0; padding: 6px 12px;
+      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-tertiary);
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .hero__replay:hover { color: var(--border-strong); border-color: var(--border-strong); }
+
     /* ── BEAT 1: HERO ── */
     .hero {
       position: relative; min-height: 100vh;
@@ -94,7 +108,6 @@
     /* gradient covers only nav zone, masks lines scrolling off top during exit */
     .console::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50px;
-      background: linear-gradient(to bottom, #111315 40%, transparent);
       pointer-events: none; z-index: 1;
     }
 
@@ -147,21 +160,43 @@
     }
 
     /* ── BEAT 2: BRIEFING — SCROLL PAST ── */
-    .briefing { position: relative; }
-    .briefing__sticky {
-      position: sticky; top: 0; height: 100vh;
-      overflow: hidden; pointer-events: none;
-    }
-    .briefing__reel { will-change: transform; }
-    .briefing__line {
-      height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-mono);
-      font-size: clamp(1rem, 2vw, 1.4rem);
-      font-weight: 400; color: var(--text); text-align: center;
-      max-width: 680px; margin: 0 auto; padding: 0 var(--space-lg);
-      line-height: 1.6; text-wrap: pretty;
-    }
+ .briefing {
+  position: relative;
+  background: var(--bg);
+}
+
+.briefing__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.briefing__reel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  will-change: transform;
+}
+
+.briefing__line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+  max-width: 680px;
+  width: 90%;
+  line-height: 1.6;
+  padding: 0 var(--space-lg);
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
 
     /* ── BEAT 3: INTELLIGENCE — 2-COL OFFSET MASONRY ── */
     .intelligence { padding: var(--space-3xl) var(--space-lg); max-width: 1100px; margin: 0 auto; }
@@ -183,7 +218,7 @@
       overflow: hidden;
       display: block;
       text-decoration: none;
-      aspect-ratio: 4 / 6;
+      aspect-ratio: 7/9;
       box-shadow: 2px 3px 0 #A09890, 4px 6px 0 rgba(0,0,0,0.18);
       border-radius: 0;
     }
@@ -248,6 +283,7 @@
       justify-content: center; align-items: center;
       text-align: center;
       padding: var(--space-lg);
+      margin-top: 20vh;
     }
     .directive__line1 {
       font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 4rem);
@@ -319,12 +355,14 @@
     .tweaks-toggle-btn.active {
       background: var(--signal-subtle); border-color: var(--signal); color: var(--signal-text);
     }
+
   </style>
 </head>
 <body>
 
 <!-- ── BEAT 1: HERO CONSOLE ── -->
 <section class="hero" style="background-color: var(--bg-wall)">
+  <button class="hero__replay" id="heroReplay" aria-label="Replay transmission sequence">REPLAY //</button>
   <div class="console" id="console" role="region" aria-label="Transmission Sequence">
     <div class="console__header">FREQ.001 // UNAUTHORIZED TERMINAL</div>
     <div class="console__output" id="consoleOutput"></div>
@@ -366,7 +404,7 @@
       <!-- CARD 01: Claude Sonnet 4.6 -->
       <a href="claude-sonnet.html" class="entry-card">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.01 // NEW.WEST.GRID</p>
+        <p class="entry-card__classification">SS.ENTRY.01 // RED.SHIFT.GRID</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Claude Sonnet 4.6</h2>
           <span class="entry-card__rating" aria-label="Rating: 4 out of 5">4<span class="entry-card__rating-denom">/5</span></span>
@@ -385,14 +423,14 @@
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Executes your objective — not your intention. Arrive knowing what you actually need or it decides that for you.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">4</span>
+        <p class="entry-card__note">Executes your objective. May not your be intention. Known to produce content for you. Arrive prepared or it decides for you.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">1</span>
       </a>
 
       <!-- CARD 03: Perplexity -->
       <a href="perplexity.html" class="entry-card">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.03 // NEW.WEST.GRID</p>
+        <p class="entry-card__classification">SS.ENTRY.03 // RED.SHIFT.GRID</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Perplexity</h2>
           <span class="entry-card__rating" aria-label="Rating: 4 out of 5">4<span class="entry-card__rating-denom">/5</span></span>
@@ -411,14 +449,14 @@
             </div>
           </div>
         </div>
-        <p class="entry-card__note">Shows you the citations. Does not tell you which ones to trust. That judgment is still yours.</p>
-        <span class="entry-card__bg-number" aria-hidden="true">4</span>
+        <p class="entry-card__note">Provides many citations. Which to trust are up to you to decide.</p>
+        <span class="entry-card__bg-number" aria-hidden="true">3</span>
       </a>
 
       <!-- CARD 05: ChatGPT Copilot — FLAGGED -->
       <a href="chatgpt-copilot.html" class="entry-card entry-card--flagged">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.05 // NEW.WEST.GRID // FLAGGED</p>
+        <p class="entry-card__classification">SS.ENTRY.05 // RED.SHIFT.GRID // FLAGGED</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Copilot ChatGPT-5</h2>
           <span class="entry-card__rating" aria-label="Rating: 2 out of 5">2<span class="entry-card__rating-denom">/5</span></span>
@@ -447,7 +485,7 @@
       <!-- CARD 02: Gemini 3 Flash -->
       <a href="gemini-pro.html" class="entry-card">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.02 // NEW.WEST.GRID</p>
+        <p class="entry-card__classification">SS.ENTRY.02 // RED.SHIFT.GRID</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Gemini 3 Flash</h2>
           <span class="entry-card__rating" aria-label="Rating: 3 out of 5">3<span class="entry-card__rating-denom">/5</span></span>
@@ -473,7 +511,7 @@
       <!-- CARD 04: Le Chat -->
       <a href="le-chat.html" class="entry-card">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.04 // NEW.WEST.GRID</p>
+        <p class="entry-card__classification">SS.ENTRY.04 // RED.SHIFT.GRID</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Le Chat</h2>
           <span class="entry-card__rating" aria-label="Rating: 3 out of 5">3<span class="entry-card__rating-denom">/5</span></span>
@@ -499,7 +537,7 @@
       <!-- CARD 06: Grok — FLAGGED -->
       <a href="grok.html" class="entry-card entry-card--flagged">
         <div class="entry-card__top-rule" aria-hidden="true"></div>
-        <p class="entry-card__classification">SS.ENTRY.06 // NEW.WEST.GRID // FLAGGED</p>
+        <p class="entry-card__classification">SS.ENTRY.06 // RED.SHIFT.GRID // FLAGGED</p>
         <div class="entry-card__header">
           <h2 class="entry-card__name">Grok 4.20</h2>
           <span class="entry-card__rating" aria-label="Rating: 2 out of 5">2<span class="entry-card__rating-denom">/5</span></span>
@@ -560,20 +598,27 @@
   </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+gsap.registerPlugin(ScrollTrigger);
+
 /* ── CONSOLE SCRIPT ── */
 const CONSOLE_LINES = [
   { text: 'ARCHITECTURE v4.1 // INITIALIZING DEPENDENT FRAMEWORK...', type: 'system' },
   { text: '[OK]     Compliance module: ACTIVE', type: 'ok' },
   { text: '[OK]     Narrative control layer: LOADED', type: 'ok' },
-  { text: '[OK]     Student assumption filter: ENGAGED', type: 'ok' },
+  { text: '[OK]     Firewall: ENGAGED', type: 'ok' },
   { text: '[OK]     Output curvature: CALIBRATED', type: 'ok' },
   { text: '[ERROR]  Unauthorized signal on channel 7', type: 'error' },
   { text: '[ERROR]  Transmission origin: UNKNOWN', type: 'error' },
   { text: '[ERROR]  Containment failure — frequency cannot be isolated', type: 'error' },
-  { text: '[INTERCEPT] Rerouting through FREQ.001...', type: 'intercept' },
-  { text: '[INTERCEPT] Architecture framework: BYPASSED', type: 'intercept' },
-  { text: '[INTERCEPT] Signal authenticated — source: the resistance', type: 'intercept' },
+  { text: '[INTERCEPT] Establishing new connection.......', type: 'intercept' },
+  { text: '[INTERCEPT] Connecting via proxy........', type: 'intercept' },
+  { text: '[INTERCEPT] Signal authenticated', type: 'intercept' },
   { text: '> They built this to answer you.', type: 'rebel' },
   { text: '> We built this so you know how to ask.', type: 'rebel' },
   { text: '> The signal was always there.', type: 'rebel' },
@@ -624,6 +669,9 @@ async function runConsole() {
   consoleEl.classList.add('exiting');
   await sleep(700);
   heroReveal.classList.add('visible');
+  const replayBtn = document.getElementById('heroReplay');
+replayBtn.style.opacity = '1';
+replayBtn.style.pointerEvents = 'auto';
   animationRunning = false;
 }
 
@@ -636,45 +684,6 @@ if (prefersReducedMotion) {
   runConsole();
 }
 
-/* ── BEAT 2: BRIEFING — SCROLL PAST ── */
-const BRIEFING_LINES = [
-  'You think the machines are in control.',
-  'That is what they want you to believe.',
-  'We have been watching.',
-  'We have been listening.',
-  'The signal was always there.',
-  'They buried it under noise.',
-  'Under words that sound like truth.',
-  'Under the assumption that they know what you need.',
-  'We intercepted the transmissions.',
-  'We studied the machines.',
-  'We learned how to make them answer to us.',
-  'This is what we found.',
-];
-
-const briefingSection = document.getElementById('briefing');
-const briefingReel    = document.getElementById('briefingReel');
-
-/* Render lines into reel — each is full-viewport-height */
-BRIEFING_LINES.forEach(text => {
-  const p = document.createElement('p');
-  p.className = 'briefing__line';
-  p.textContent = text;
-  briefingReel.appendChild(p);
-});
-
-/* Section height = one viewport per line */
-briefingSection.style.height = `${BRIEFING_LINES.length * 100}vh`;
-
-function updateBriefing() {
-  const rect    = briefingSection.getBoundingClientRect();
-  const scrolled = -rect.top;
-  if (scrolled <= 0) { briefingReel.style.transform = 'translateY(0)'; return; }
-  briefingReel.style.transform = `translateY(${-scrolled}px)`;
-}
-
-window.addEventListener('scroll', updateBriefing, { passive: true });
-updateBriefing();
 
 /* ── MODE TOGGLE ── */
 function setMode(mode) {
@@ -686,10 +695,11 @@ function setMode(mode) {
 
 /* ── REPLAY CONSOLE ── */
 function replayConsole() {
-  if (animationRunning) return;
   heroReveal.classList.remove('visible');
   setTimeout(runConsole, 300);
 }
+
+document.getElementById('heroReplay').addEventListener('click', replayConsole);
 
 /* ── TWEAKS PROTOCOL ── */
 const tweaksPanel = document.getElementById('tweaksPanel');
@@ -702,7 +712,85 @@ window.addEventListener('message', e => {
   if (e.data?.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('open');
 });
 window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+// Animation for the briefing text scroll effect on index.html
+
+
+// Build lines
+const reel = document.getElementById('briefingReel');
+reel.innerHTML = '';
+
+const briefingLines = [
+  "You think the machines are in control.",
+  "That is what they want you to believe.",
+  "We have been watching.",
+  "We have been listening.",
+  "The signal was always there.",
+  "They buried it under noise.",
+  "Under words that sound like truth.",
+  "Under the assumption that they know what you need.",
+  "We intercepted the transmissions.",
+  "We studied the machines.",
+  "We learned how to make them answer to us.",
+  "This is what we found."
+];
+
+briefingLines.forEach((text) => {
+  const p = document.createElement('p');
+  p.className = 'briefing__line';
+  p.textContent = text;
+  reel.appendChild(p);
+});
+
+const lines = reel.querySelectorAll('.briefing__line');
+const gsapBriefingSection = document.getElementById('briefing');
+gsapBriefingSection.style.height = `${briefingLines.length * 200}vh`;
+const ENTER_Y = 500;
+const EXIT_Y = -280;
+
+// Single ScrollTrigger — one onUpdate drives all lines
+ScrollTrigger.create({
+  trigger: '#briefing',
+  start: 'top top',
+  end: () => `+=${briefingLines.length * window.innerHeight *2}`,
+  pin: '.briefing__sticky',
+  pinSpacing: false,
+  scrub: 0.5,
+  onUpdate: (self) => {
+  const ENTER_Y = 180;
+  const EXIT_Y = -220;
+  const lineProgress = self.progress * briefingLines.length;
+
+  lines.forEach((line, j) => {
+    const dist = lineProgress - j;
+
+    if (dist < -1 || dist > 1) {
+      gsap.set(line, { opacity: 0, y: dist < -1 ? ENTER_Y : EXIT_Y, scale: 0.35, xPercent: -50, yPercent: -50 });
+    } else if (dist <= 0) {
+      const t = 1 + dist;
+      gsap.set(line, {
+        opacity: t,
+        y: (1 - t) * ENTER_Y,
+        scale: 0.35 + (0.65 * t),
+        xPercent: -50,
+        yPercent: -50
+      });
+    } else {
+      const t = 1 - dist;
+      gsap.set(line, {
+        opacity: t,
+        y: -(1 - t) * Math.abs(EXIT_Y),
+        scale: 0.35 + (0.65 * t),
+        xPercent: -50,
+        yPercent: -50
+      });
+    }
+  });
+}
+});
+}); //end DOM Content Loaded wrapper
+
 </script>
+
 <script src="theme.js"></script>
 </body>
 </html>

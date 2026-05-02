@@ -103,3 +103,4 @@
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { colorMode: state } }, '*');
   };
 })();
+
