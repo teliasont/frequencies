@@ -166,14 +166,34 @@
       background-color: #F2454F;
     }
 
-    .paper__inner {
-      padding: 40px;
-      padding-top: 44px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+     .paper__inner {
+  padding: 40px;
+  padding-top: 44px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  /* For edits to the Firefox scrollbar*/
+  scrollbar-width: thin;
+  scrollbar-color: #B0A8A4 transparent;
+}
+
+.paper__inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.paper__inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.paper__inner::-webkit-scrollbar-thumb {
+  background: #B0A8A4;
+}
+
+.paper__inner::-webkit-scrollbar-thumb:hover {
+  background: #6B6360;
+}
 
     .paper__classification {
       font-family: var(--font-mono);
@@ -584,7 +604,7 @@
     .footer-nav {
       max-width: 620px;
       margin: 0 auto;
-      padding: 0 var(--space-xl) var(--space-2xl);
+      padding: var(--space-2xl) var(--space-xl) var(--space-2xl);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -625,39 +645,6 @@
       border-radius: 1px;
     }
 
-    /* ── TWEAKS PANEL ── */
-    .tweaks-panel {
-      position: fixed; bottom: var(--space-lg); right: var(--space-lg); z-index: 500;
-      background: var(--bg-subtle); border: 1px solid var(--border-strong);
-      padding: var(--space-md); width: 220px;
-      display: none; flex-direction: column; gap: var(--space-md);
-    }
-    .tweaks-panel.open { display: flex; }
-    .tweaks-panel__title {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.2em; color: var(--text-tertiary);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .tweaks-panel__close {
-      background: none; border: none; cursor: pointer; color: var(--text-tertiary);
-      font-family: var(--font-mono); font-size: 11px; padding: 0;
-    }
-    .tweaks-panel__close:hover { color: var(--accent); }
-    .tweaks-row { display: flex; flex-direction: column; gap: var(--space-xs); }
-    .tweaks-label {
-      font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--text-secondary);
-    }
-    .tweaks-toggle { display: flex; gap: var(--space-xs); }
-    .tweaks-toggle-btn {
-      flex: 1; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.1em; padding: 6px 4px; background: none;
-      border: 1px solid var(--border); color: var(--text-tertiary);
-      cursor: pointer; transition: all 0.15s; text-align: center;
-    }
-    .tweaks-toggle-btn.active {
-      background: var(--signal-subtle); border-color: var(--signal); color: var(--signal-text);
-    }
 
     /* ── THEME TOGGLE BUTTON ── */
     .nav-theme-btn {
@@ -728,21 +715,6 @@
     </ul>
   </nav>
 
-  <!-- ── TWEAKS PANEL ── -->
-  <div class="tweaks-panel" id="tweaksPanel" role="dialog" aria-label="Tweaks">
-    <div class="tweaks-panel__title">
-      <span>Tweaks</span>
-      <button class="tweaks-panel__close" id="tweaksClose" aria-label="Close tweaks">&#x2715;</button>
-    </div>
-    <div class="tweaks-row">
-      <span class="tweaks-label">Color Mode</span>
-      <div class="tweaks-toggle">
-        <button class="tweaks-toggle-btn" id="modeD" onclick="window.freqSetTheme('dark')">Dark</button>
-        <button class="tweaks-toggle-btn" id="modeL" onclick="window.freqSetTheme('light')">Light</button>
-        <button class="tweaks-toggle-btn" id="modeS" onclick="window.freqSetTheme('system')">Auto</button>
-      </div>
-    </div>
-  </div>
 
   <div class="page-body">
 
@@ -751,18 +723,18 @@
       <div class="paper">
         <div class="paper__top-stripe" aria-hidden="true"></div>
         <div class="paper__inner">
-          <p class="paper__classification">SS.ENTRY.04 // NEW.WEST.GRID // INTELLIGENCE DOSSIER</p>
-          <h1 class="paper__model-name">GEMINI<br>3.1 PRO</h1>
+          <p class="paper__classification">SS.ENTRY.02 // NEW.WEST.GRID // INTELLIGENCE DOSSIER</p>
+          <h1 class="paper__model-name">GEMINI<br>3.1 FLASH</h1>
           <div class="paper__rule" aria-hidden="true"></div>
 
           <div class="paper__data-fields">
             <div class="paper__field">
               <span class="paper__field-label">Access</span>
-              <span class="paper__field-value">EWU</span>
+              <span class="paper__field-value">Institutional</span>
             </div>
             <div class="paper__field">
               <span class="paper__field-label">Tier</span>
-              <span class="paper__field-value">Most Capable</span>
+              <span class="paper__field-value">Fastest</span>
             </div>
             <div class="paper__field">
               <span class="paper__field-label">Limit Hit</span>
@@ -780,8 +752,6 @@
           <div class="paper__field">
             <span class="paper__field-label">Best Deployed For</span>
             <div class="paper__tags">
-              <span class="paper__tag">Something I Love</span>
-              <span class="paper__tag">Learn Something New</span>
               <span class="paper__tag">Design Challenge</span>
               <span class="paper__tag">Design Concept</span>
               <span class="paper__tag">Design Problem</span>
@@ -792,18 +762,18 @@
           <div class="paper__report-divider" aria-hidden="true"></div>
 
           <div class="paper__report-header">
-            <span class="paper__report-header-label">Intelligence Report // SS.ENTRY.04</span>
+            <span class="paper__report-header-label">Intelligence Report // SS.ENTRY.02</span>
             <div class="paper__report-header-rule" aria-hidden="true"></div>
           </div>
 
           <div class="paper__metadata-row" role="region" aria-label="Asset metadata">
             <div class="paper__metadata-cell">
               <span class="paper__metadata-label">Asset</span>
-              <span class="paper__metadata-value">Gemini 3.1 Pro</span>
+              <span class="paper__metadata-value">Gemini 3.1 Flash</span>
             </div>
             <div class="paper__metadata-cell">
               <span class="paper__metadata-label">Classification</span>
-              <span class="paper__metadata-value paper__metadata-value--secondary">SS.ENTRY.04</span>
+              <span class="paper__metadata-value paper__metadata-value--secondary">SS.ENTRY.02</span>
             </div>
             <div class="paper__metadata-cell">
               <span class="paper__metadata-label">Status</span>
@@ -818,30 +788,30 @@
           <div class="paper__report-subs">
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Observed Behavior</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro sustains coherent, extended exchanges without losing the thread of the original prompt. It surfaces alternate interpretations of a question before committing to an answer — a useful signal when the query itself contains assumptions worth interrogating. Under repeated pressure, it holds its position rather than capitulating, though it will revise when presented with evidence. Response length tracks query complexity with reasonable discipline.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Gemini Flash lacks the conversationality of some other models. It prefers breaking down ideas into bullet points and small topical paragraphs. It expresses enthusiasm for your responses and seems to belive your idea is always great. Beware of its sycophantic tendencies.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Operational Strengths</p>
-              <p class="paper__report-sub-body" style="text-align: left">Strong cross-domain synthesis — the asset moves from technical specificity to broad conceptual framing without losing accuracy. Brainstorming tasks yield output that resists obvious directions. Conversational register is adjustable; the model responds to tonal shifts in the operator's prompts without requiring explicit instruction. Useful for exploratory work where the output is a starting condition, not a final product.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Gemini Flash explores the reasons behind choices, though not to as strong a degree as its superior models like Gemini Pro. The model provides examples when responding and likes to try to answer in a "complete" manner for each query. This may be beneficial to the individual or not.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Known Limitations</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro defaults toward completeness over precision — responses are thorough to a fault when brevity is called for. The operator must supply direction or the model fills the vacuum with safe, averaged output. It does not flag its own uncertainty with consistency; confident-sounding answers may rest on shallow inference. Access restricted to EWU credentials; reliability under institutional network conditions has not been verified.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Frequent use of bullet points creates a repetitive reading experience. The tone of the model is stale when not praising the ideas presented by the informant. It is on the more vesbos side of models, which may cause irritation when informants are searching for specific information.</p>
             </div>
           </div>
 
-          <div class="paper__bg-number" aria-hidden="true">4</div>
         </div>
+        <div class="paper__bg-number" aria-hidden="true">4</div>
       </div>
     </section>
 
     <!-- INTELLIGENCE REPORT SECTION -->
-    <section class="report-section" aria-label="Intelligence Report — Gemini 3.1 Pro">
+    <!-- <section class="report-section" aria-label="Intelligence Report — Gemini 3.1 Pro"> -->
 
       <!-- OPERATOR ASSESSMENT -->
-      <aside class="operator-assessment" aria-label="Operator Assessment">
+      <!-- <aside class="operator-assessment" aria-label="Operator Assessment">
         <p class="operator-assessment__label">Operator Assessment // SS.ENTRY.04</p>
         <p class="operator-assessment__status">Reliable — Deploy with Direction</p>
         <p class="operator-assessment__prose">The machine does not decide what the work is. You do. Gemini 3.1 Pro is a capable instrument, and like all instruments it will follow whoever is holding it. Supply a clear objective and a specific constraint and the output is worth examining. Leave the objective open and the machine will fill it with consensus. That is not the machine's failure. That is yours.</p>
@@ -850,13 +820,13 @@
           <span class="operator-assessment__directive-label">Directive //</span>
           <span class="operator-assessment__directive-text">Define the question before you deploy the asset. The model reflects your precision back at you.</span>
         </div>
-      </aside>
+      </aside> -->
 
       <!-- EVIDENCE FILE LINK -->
-      <div class="evidence-block">
+      <!-- <div class="evidence-block">
         <span class="evidence-block__label">Intercept Record Available</span>
         <a href="#" class="evidence-block__link">VIEW FULL INTERCEPT RECORD //</a>
-      </div>
+      </div> -->
 
       <!-- FOOTER NAVIGATION -->
       <nav class="footer-nav" aria-label="Page navigation">
@@ -869,18 +839,6 @@
   </div>
 
   <script src="theme.js"></script>
-  <script>
-    /* ── TWEAKS PANEL ── */
-    const tweaksPanel = document.getElementById('tweaksPanel');
-    document.getElementById('tweaksClose').addEventListener('click', () => {
-      tweaksPanel.classList.remove('open');
-      window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
-    });
-    window.addEventListener('message', e => {
-      if (e.data?.type === '__activate_edit_mode')   tweaksPanel.classList.add('open');
-      if (e.data?.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('open');
-    });
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-  </script>
+ 
 </body>
 </html>
