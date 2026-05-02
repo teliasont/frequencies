@@ -176,6 +176,9 @@
   flex-direction: column;
   position: relative;
   overflow-y: auto;
+  /* For edits to the Firefox scrollbar*/
+  scrollbar-width: thin;
+  scrollbar-color: #B0A8A4 transparent;
 }
 
 .paper__inner::-webkit-scrollbar {
@@ -774,9 +777,6 @@
             <span class="paper__field-label">Best Deployed For</span>
             <div class="paper__tags">
               <span class="paper__tag">Something I Love</span>
-              <span class="paper__tag">Learn Something New</span>
-              <span class="paper__tag">Design Challenge</span>
-              <span class="paper__tag">Design Concept</span>
               <span class="paper__tag">Design Problem</span>
             </div>
           </div>
@@ -821,12 +821,13 @@
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Known Limitations</p>
-              <p class="paper__report-sub-body" style="text-align: left">The model is full of overwhelming, over-explained information. It is eager to do the work for you. It always ends a prompt with phrases indicating it wants you to hand over the work to it. Caution advised and discernment recommended.</p>
+              <p class="paper__report-sub-body" style="text-align: left">The model is full of overwhelming, over-explained information. It is eager to do the work for you. It always ends a prompt with phrases indicating it wants you to hand over the work to it. Caution advised and discernment recommended. Technical difficulties where the informants could not access the model occurred. Most research was completed, but the logs are not complete.</p>
             </div>
           </div>
 
-          <div class="paper__bg-number" aria-hidden="true">5</div>
+          
         </div>
+        <div class="paper__bg-number" aria-hidden="true">5</div>
       </div>
     </section>
 

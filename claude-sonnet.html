@@ -167,13 +167,33 @@
     }
 
     .paper__inner {
-      padding: 40px;
-      padding-top: 44px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+  padding: 40px;
+  padding-top: 44px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  /* For edits to the Firefox scrollbar*/
+  scrollbar-width: thin;
+  scrollbar-color: #B0A8A4 transparent;
+}
+
+.paper__inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.paper__inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.paper__inner::-webkit-scrollbar-thumb {
+  background: #B0A8A4;
+}
+
+.paper__inner::-webkit-scrollbar-thumb:hover {
+  background: #6B6360;
+}
 
     .paper__classification {
       font-family: var(--font-mono);
@@ -584,7 +604,7 @@
     .footer-nav {
       max-width: 620px;
       margin: 0 auto;
-      padding: 0 var(--space-xl) var(--space-2xl);
+      padding: var(--space-2xl) var(--space-xl) var(--space-2xl);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -751,7 +771,7 @@
       <div class="paper">
         <div class="paper__top-stripe" aria-hidden="true"></div>
         <div class="paper__inner">
-          <p class="paper__classification">SS.ENTRY.01 // NEW.WEST.GRID // INTELLIGENCE DOSSIER</p>
+          <p class="paper__classification">SS.ENTRY.01 // RED.SHIFT.GRID // INTELLIGENCE DOSSIER</p>
           <h1 class="paper__model-name">CLAUDE<br>SONNET</h1>
           <div class="paper__rule" aria-hidden="true"></div>
 
@@ -782,7 +802,6 @@
             <div class="paper__tags">
               <span class="paper__tag">Something I Love</span>
               <span class="paper__tag">Learn Something New</span>
-              <span class="paper__tag">Design Challenge</span>
               <span class="paper__tag">Design Concept</span>
               <span class="paper__tag">Design Problem</span>
             </div>
@@ -818,30 +837,31 @@
           <div class="paper__report-subs">
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Observed Behavior</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro sustains coherent, extended exchanges without losing the thread of the original prompt. It surfaces alternate interpretations of a question before committing to an answer — a useful signal when the query itself contains assumptions worth interrogating. Under repeated pressure, it holds its position rather than capitulating, though it will revise when presented with evidence. Response length tracks query complexity with reasonable discipline.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Compared to its Haiku counterpart, Sonnet is a more capable model. Informants reported while conversing with it, the model would prompt questions about themes in the topic the informant had not explicitly stated. However, the conversation lacked detail of the specific events and characters from inside the novel. The model provided limited, but thought-out options when brainstorming ideas. For creating plans and routines, the plans were kept readable, focused on simple goals a human could easily accomplish day by day. The responses are briefer than other models, but remain readable and content is still useful.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Operational Strengths</p>
-              <p class="paper__report-sub-body" style="text-align: left">Strong cross-domain synthesis — the asset moves from technical specificity to broad conceptual framing without losing accuracy. Brainstorming tasks yield output that resists obvious directions. Conversational register is adjustable; the model responds to tonal shifts in the operator's prompts without requiring explicit instruction. Useful for exploratory work where the output is a starting condition, not a final product.</p>
+              <p class="paper__report-sub-body" style="text-align: left">The model suceeds in an encouraging, but not sycophantic tone. If prompted to explain something, it does not sufficiently and often provides examples.</p>
             </div>
 
             <div class="paper__report-sub">
               <p class="paper__report-sub-label" style="text-align: left">Known Limitations</p>
-              <p class="paper__report-sub-body" style="text-align: left">Gemini 3.1 Pro defaults toward completeness over precision — responses are thorough to a fault when brevity is called for. The operator must supply direction or the model fills the vacuum with safe, averaged output. It does not flag its own uncertainty with consistency; confident-sounding answers may rest on shallow inference. Access restricted to EWU credentials; reliability under institutional network conditions has not been verified.</p>
+              <p class="paper__report-sub-body" style="text-align: left">Graphic capacity may be limited. Informants will need to run more tests. The model may try to overtake your creative control if not specifically prompted to avoid so. One informant reported the model created a graphic immediately without sources when the informant had only requested to be walked through the brainstorming process.</p>
             </div>
           </div>
 
-          <div class="paper__bg-number" aria-hidden="true">4</div>
+         
         </div>
+         <div class="paper__bg-number" aria-hidden="true">4</div>
       </div>
     </section>
 
     <!-- INTELLIGENCE REPORT SECTION -->
-    <section class="report-section" aria-label="Intelligence Report — Gemini 3.1 Pro">
+    <!-- <section class="report-section" aria-label="Intelligence Report — Gemini 3.1 Pro"> -->
 
       <!-- OPERATOR ASSESSMENT -->
-      <aside class="operator-assessment" aria-label="Operator Assessment">
+      <!-- <aside class="operator-assessment" aria-label="Operator Assessment">
         <p class="operator-assessment__label">Operator Assessment // SS.ENTRY.04</p>
         <p class="operator-assessment__status">Reliable — Deploy with Direction</p>
         <p class="operator-assessment__prose">The machine does not decide what the work is. You do. Gemini 3.1 Pro is a capable instrument, and like all instruments it will follow whoever is holding it. Supply a clear objective and a specific constraint and the output is worth examining. Leave the objective open and the machine will fill it with consensus. That is not the machine's failure. That is yours.</p>
@@ -850,13 +870,13 @@
           <span class="operator-assessment__directive-label">Directive //</span>
           <span class="operator-assessment__directive-text">Define the question before you deploy the asset. The model reflects your precision back at you.</span>
         </div>
-      </aside>
+      </aside> -->
 
       <!-- EVIDENCE FILE LINK -->
-      <div class="evidence-block">
+      <!-- <div class="evidence-block">
         <span class="evidence-block__label">Intercept Record Available</span>
         <a href="#" class="evidence-block__link">VIEW FULL INTERCEPT RECORD //</a>
-      </div>
+      </div> -->
 
       <!-- FOOTER NAVIGATION -->
       <nav class="footer-nav" aria-label="Page navigation">
